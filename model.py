@@ -1,5 +1,5 @@
 """Models and database functions for cars db."""
-from flask import Flask
+#from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 #from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -50,7 +50,7 @@ class ModelBrand(db.Model):
 
     __tablename__ = "modelsbrands"
 
-    modelbrand_id = db.Column(dB.Integer, autoincrement=True, primary_key=True)
+    modelbrand_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     #not sure that these are the right foreign key links!
     brand_id = db.Column(db.Integer, db.ForeignKey("models.id"))
     model_id = db.Column(db.Integer, db.ForeignKey("brands.id"))
