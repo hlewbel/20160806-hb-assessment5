@@ -19,41 +19,37 @@ class Model(db.Model):
     __tablename__ = "models"
    
     #shouldn't this be model_id instead of id?
-    #add a default value for id??
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     year = db.Column(db.Integer, nullable=False)
     brand_name = db.Column(db.String(50), db.ForeignKey("brands.name"), nullable=True)
     name = db.Column(db.String(50), nullable=False)
 
-    branding = db.relationship("Brand", secondary="modelsbrands")
+    def __repr__(self):
+            """Show info about model."""
+
+            return "<Model id=%s year=%s brand_name=%s name=%s>" % (
+                self.id, self.year, self.brand_name, self.name)
 
 class Brand(db.Model):
     """Car brand."""
 
     __tablename__ = "brands"
  
-    # need to set default nextval for id: nextval('brands_id_seq')
-    # set up foreign key brands_pkey with btree (id)
     # seems like id should be brand_id instead of "id" but that wouldn't match
     # existing column name in table that's already set up
     #id and name may not be null so set nullable=False
     id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    name = db.Column(db.String(50), db.ForeignKey("models.brand_name"), nullable=False)
+    name = db.Column(db.String(50), nullable=False)
     founded = db.Column(db.Integer, nullable=True)
     headquarters = db.Column(db.String(50), nullable=True)
     discontinued = db.Column(db.Integer, nullable=True)
-    brand_name = db.Column(db.String(50), nullable=True)
+    
+    def __repr__(self):
+        """Show info about brand."""
 
-    modeling = db.relationship("Model", secondary="modelsbrands")
+        return "<Brand id=%s name=%s founded=%s headquarters=%s discontinued=%s>" % (
+            self.id, self.name, self.founded, self.headquarters, self.discontinued)
 
-class ModelBrand(db.Model):
-
-    __tablename__ = "modelsbrands"
-
-    modelbrand_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    #not sure that these are the right foreign key links!
-    brand_id = db.Column(db.Integer, db.ForeignKey("models.id"))
-    model_id = db.Column(db.Integer, db.ForeignKey("brands.id"))
 
 # End Part 1
 
